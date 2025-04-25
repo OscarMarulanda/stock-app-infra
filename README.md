@@ -23,13 +23,7 @@ This repo contains the infrastructure as code (IaC) for a stock recommendation a
 | `key_name`                | Existing EC2 Key Pair for SSH access  |
 | `aws_region`              | AWS region (default: `us-east-2`)     |
 
-## 📁 File Structure
 
-. ├── backend/ │ └── main.tf ├── frontend/ │ └── main.tf ├── ssm/ │ └── main.tf ├── variables.tf ├── provider.tf ├── main.tf └── terraform.tfstate (ignored)
-
-csharp
-Copy
-Edit
 
 ## 🧪 How to Deploy
 
@@ -40,7 +34,7 @@ terraform apply
 
 
 
-Stock Data Visualization Dashboard
+# Stock Data Visualization Dashboard
 A full-stack application that fetches stock market data from Alpha Vantage API, stores it in a database, and displays interactive charts with Vue.js.
 
 Screenshot (Optional: Add screenshot later)
