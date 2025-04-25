@@ -36,38 +36,47 @@ terraform apply
 
 
 # Stock Data Visualization Dashboard
+
 A full-stack application that fetches stock market data from Alpha Vantage API, stores it in a database, and displays interactive charts with Vue.js.
 
-Screenshot (Optional: Add screenshot later)
+![Screenshot](assets/screenshot.png) *(Optional: Add screenshot later)*
 
-Features
-View historical stock data (Open, High, Low, Close, Volume)
-Select time ranges (1 week, 1 month, 6 months, 1 year)
-Automatic data refresh from Alpha Vantage API
-Local database caching to minimize API calls
-Responsive design with Tailwind CSS
-Tech Stack
-Frontend:
+## Features
 
-Vue 3 (Composition API)
-TypeScript
-Pinia (State management)
-Chart.js (Data visualization)
-Tailwind CSS (Styling)
-Axios (HTTP client)
-Backend:
+- View historical stock data (Open, High, Low, Close, Volume)
+- Select time ranges (1 week, 1 month, 6 months, 1 year)
+- Automatic data refresh from Alpha Vantage API
+- Local database caching to minimize API calls
+- Responsive design with Tailwind CSS
 
-Go (Golang)
-Gorilla Mux (Router)
-CockroachDB/PostgreSQL (Database)
-RESTy (HTTP client)
-Prerequisites
-Go 1.20+
-Node.js 16+
-CockroachDB/PostgreSQL
-Alpha Vantage API key (free tier available)
-Setup Instructions
-1. Backend Setup
+## Tech Stack
+
+**Frontend**:
+- Vue 3 (Composition API)
+- TypeScript
+- Pinia (State management)
+- Chart.js (Data visualization)
+- Tailwind CSS (Styling)
+- Axios (HTTP client)
+
+**Backend**:
+- Go (Golang)
+- Gorilla Mux (Router)
+- CockroachDB/PostgreSQL (Database)
+- RESTy (HTTP client)
+
+## Prerequisites
+
+- Go 1.20+
+- Node.js 16+
+- CockroachDB/PostgreSQL
+- Alpha Vantage API key (free tier available)
+
+## Setup Instructions
+
+### 1. Backend Setup
+
+```bash
 # Clone the repository
 git clone https://github.com/yourusername/stock-visualizer.git
 cd stock-visualizer/backend
