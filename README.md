@@ -31,6 +31,7 @@ This repo contains the infrastructure as code (IaC) for a stock recommendation a
 terraform init
 terraform plan
 terraform apply
+```
 
 
 
