@@ -1,0 +1,17 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+.crash
+*.log
+*.bak
+
+# IDEs and OS
+.DS_Store
+*.swp
+*.swo
+
+# AWS credentials (just in case)
+*.pem
