@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api',  // Explicitly setting the backend URL for development
+    baseURL: 'http://3.131.99.128:8080/api',  // Explicitly setting the backend URL for development
     timeout: 10000
   })
 
