@@ -27,8 +27,9 @@
         </div>
       </div>
   
-      <div v-if="initialLoading" class="flex justify-center items-center h-64">
-    <div>Fetching initial data for {{ symbol }}...</div>
+      <div v-if="stockStore.loading" class="loading-indicator">
+    <p>Loading data...</p>
+    <p v-if="stockStore.error">(Note: {{ stockStore.error }})</p>
   </div>
   
       <div v-else-if="error" class="text-red-500 p-4">
@@ -169,9 +170,9 @@
         stockStore.fetchStockData(props.symbol, range)
       }
   
-      const refreshData = () => {
-        stockStore.refreshStockData()
-      }
+      const refreshData = async () => {
+  await stockStore.refreshStockData()
+}
   
       watch(() => stockStore.stockData, async (newData) => {
   if (Array.isArray(newData) && newData.length > 0) {
@@ -193,6 +194,12 @@ onMounted(async () => {
       await stockStore.fetchStockData(props.symbol, currentRange.value)
       initialLoading.value = false
     })
+
+    watch(() => props.symbol, async (newSymbol) => {
+  initialLoading.value = true
+  await stockStore.fetchStockData(newSymbol, currentRange.value)
+  initialLoading.value = false
+})
   
       onBeforeUnmount(() => {
         destroyChart()
