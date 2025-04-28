@@ -25,7 +25,7 @@
         </div>
       </div>
   
-      <StockChart v-if="symbol" :symbol="symbol" />
+      <StockChart v-if="loadedSymbol" :symbol="loadedSymbol" />
     </div>
   </template>
   
@@ -40,13 +40,15 @@
     },
     setup() {
       const symbol = ref('AAPL') // Default symbol
+      const loadedSymbol = ref('AAPL')  // What actually triggers chart
   
       const updateChart = () => {
-        // The StockChart component will react to prop changes automatically
+        loadedSymbol.value = symbol.value.toUpperCase().trim()
       }
   
       return {
         symbol,
+        loadedSymbol,
         updateChart
       }
     }

@@ -27,9 +27,9 @@
         </div>
       </div>
   
-      <div v-if="loading" class="flex justify-center items-center h-64">
-        <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+      <div v-if="initialLoading" class="flex justify-center items-center h-64">
+    <div>Fetching initial data for {{ symbol }}...</div>
+  </div>
   
       <div v-else-if="error" class="text-red-500 p-4">
         {{ error }}
@@ -83,6 +83,7 @@
       }
     },
     setup(props) {
+      const initialLoading = ref(true)
       const stockStore = useStockStore()
       const chartCanvas = ref<HTMLCanvasElement | null>(null)
       const chartInstance = ref<Chart | null>(null)
@@ -179,13 +180,19 @@
       renderChart()
     } else {
       console.warn('Canvas still not available after nextTick')
+      setTimeout(() => {
+        if (chartCanvas.value) {
+          renderChart()
+        }
+      }, 100);
     }
   }
 }, { deep: true })
   
-      onMounted(() => {
-        stockStore.fetchStockData(props.symbol, currentRange.value)
-      })
+onMounted(async () => {
+      await stockStore.fetchStockData(props.symbol, currentRange.value)
+      initialLoading.value = false
+    })
   
       onBeforeUnmount(() => {
         destroyChart()
@@ -201,6 +208,7 @@
         loading: stockStore.loading,
         error: stockStore.error,
         stockStore,
+        initialLoading
       }
     }
   })

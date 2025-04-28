@@ -8,3 +8,9 @@ variable "alpha_vantage_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "cockroachdb_dsn" {
+  description = "CockroachDB connection string"
+  type        = string
+  sensitive   = true
+}

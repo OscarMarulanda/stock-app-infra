@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'http://3.131.99.128:8080/api',  // Explicitly setting the backend URL for development
+    baseURL: 'http://localhost:8080/api',  // Explicitly setting the backend URL for development
     timeout: 10000
   })
 
@@ -31,29 +31,26 @@ export const useStockStore = defineStore('stock', {
       this.currentRange = range
       
       try {
-        const response = await api.get(`/stocks/${symbol}`, { // Use the custom axios instance
+        // First try to get existing data
+        const response = await api.get(`/stocks/${symbol}`, {
           params: { range }
         })
-        this.stockData = response.data
+        
+        // If no data exists, trigger a refresh
+        if (response.data.length === 0) {
+          await api.post(`/stocks/${symbol}/refresh`)
+          // Fetch again after refresh
+          const refreshedResponse = await api.get(`/stocks/${symbol}`, {
+            params: { range }
+          })
+          this.stockData = refreshedResponse.data
+        } else {
+          this.stockData = response.data
+        }
+        
         console.log(this.stockData)
       } catch (err) {
         this.error = err instanceof Error ? err.message : 'Failed to fetch stock data'
-      } finally {
-        this.loading = false
-      }
-    },
-    async refreshStockData() {
-      if (!this.currentSymbol) return
-      
-      this.loading = true
-      this.error = null
-      
-      try {
-        await api.post(`/stocks/${this.currentSymbol}/refresh`)  // Use the custom axios instance
-        // After refresh, fetch the data again
-        await this.fetchStockData(this.currentSymbol, this.currentRange)
-      } catch (err) {
-        this.error = err instanceof Error ? err.message : 'Failed to refresh stock data'
       } finally {
         this.loading = false
       }

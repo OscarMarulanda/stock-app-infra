@@ -1,0 +1,3 @@
+alpha_vantage_api_key = "548G0DALH4QGPMJG"
+cockroachdb_dsn       = "postgresql://odmarulandab:jPAxqNtMUAPPxkZx5Rv5nQ@small-emu-10569.j77.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&sslrootcert=%APPDATA%\\postgresql\\root.crt"
+key_name              = "my-key-pair"

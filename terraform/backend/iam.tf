@@ -13,9 +13,27 @@ resource "aws_iam_role" "ec2_ssm_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_access" {
-  role       = aws_iam_role.ec2_ssm_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
+resource "aws_iam_role_policy" "ssm_parameter_access" {
+  name = "SSMParameterAccess"
+  role = aws_iam_role.ec2_ssm_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "ssm:GetParameter",
+          "ssm:GetParameters",
+          "ssm:DescribeParameters"
+        ],
+        Resource = [
+          "arn:aws:ssm:us-east-2:098917396694:parameter/app/alpha_vantage_api_key",
+          "arn:aws:ssm:us-east-2:098917396694:parameter/app/cockroachdb_dsn"
+        ]
+      }
+    ]
+  })
 }
 
 resource "aws_iam_instance_profile" "ec2_instance_profile" {
