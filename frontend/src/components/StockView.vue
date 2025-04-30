@@ -26,17 +26,20 @@
       </div>
   
       <StockChart v-if="loadedSymbol" :symbol="loadedSymbol" />
+      <StockRecommendations />
     </div>
   </template>
   
   <script lang="ts">
   import { defineComponent, ref } from 'vue'
   import StockChart from '@/components/stockChart.vue'
+  import StockRecommendations from '@/components/SrockRecommendations.vue' 
   
   export default defineComponent({
     name: 'StockView',
     components: {
-      StockChart
+      StockChart,
+      StockRecommendations
     },
     setup() {
       const symbol = ref('AAPL') // Default symbol

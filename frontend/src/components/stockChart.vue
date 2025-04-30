@@ -26,6 +26,16 @@
           </button>
         </div>
       </div>
+      <div v-if="latestEntry" class="mb-4 p-4 bg-gray-100 rounded text-sm">
+  <h3 class="text-lg font-medium mb-2">Latest Stock Info ({{ latestEntry.date }})</h3>
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+    <div><strong>Open:</strong> {{ latestEntry.open.toFixed(2) }}</div>
+    <div><strong>High:</strong> {{ latestEntry.high.toFixed(2) }}</div>
+    <div><strong>Low:</strong> {{ latestEntry.low.toFixed(2) }}</div>
+    <div><strong>Close:</strong> {{ latestEntry.close.toFixed(2) }}</div>
+    <div><strong>Volume:</strong> {{ latestEntry.volume.toLocaleString() }}</div>
+  </div>
+</div>
   
       <div v-if="stockStore.loading" class="loading-indicator">
     <p>Loading data...</p>
@@ -37,7 +47,7 @@
       </div>
   
       <div v-else-if="stockStore.stockData.length === 0" class="text-gray-500 p-4">
-  No data available for this time range.
+  No data available for this Symbol, check that the symbol eists.
 </div>
   
 <div v-else class="h-96">
@@ -47,7 +57,7 @@
   </template>
   
   <script lang="ts">
-  import { defineComponent, onMounted, ref, watch, onBeforeUnmount, nextTick  } from 'vue'
+  import { computed, defineComponent, onMounted, ref, watch, onBeforeUnmount, nextTick  } from 'vue'
   import { useStockStore } from '@/stores/stockStore'
   import {
   Chart,
@@ -105,6 +115,12 @@
           chartInstance.value = null
         }
       }
+
+      const latestEntry = computed(() => {
+  return stockStore.stockData.length > 0
+    ? stockStore.stockData[0]
+    : null
+})
   
       const renderChart = () => {
   if (!chartCanvas.value) {
@@ -215,7 +231,8 @@ onMounted(async () => {
         loading: stockStore.loading,
         error: stockStore.error,
         stockStore,
-        initialLoading
+        initialLoading,
+        latestEntry
       }
     }
   })
